@@ -50,6 +50,7 @@ const engineerQuestions = [ {
     name: 'github',  
     }
 ]
+
 const internQuestions = [
     { 
     type: 'input',
@@ -83,20 +84,32 @@ const moreMembers = [
 ]
 
 function initialQuestion(){
+    teamArr = []
+    
+    
     inquirer.prompt(managerQuestions)
-    .then((managerData)=>{
-        console.log(managerData)
-
-    let addMoreMembers = () => {
-        inquirer.prompt(moreMembers)
+        .then((answers)=> {
+        let {name, id, email, officenum} = answers
+        let manager = new Manager(name, id, email, officenum)
+        teamArr.push(manager)
+        console.log(teamArr)
+        
+        let addMoreMembers = () => {
+            inquirer.prompt(moreMembers)
+            .then((answers) => {
+                console.log(answers.nextrole)
+                if (answers.nextrole === "Engineer"){
+                    inquirer.prompt(engineerQuestions)
+                }
+            })
         }
         addMoreMembers()
+
+        
+    
     })
-
-    
-
-    
-}
+        
+}     
 
 
 
