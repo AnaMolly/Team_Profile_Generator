@@ -5,26 +5,24 @@ const Engineer = require("./lib/Engineer")
 const Intern = require("./lib/Intern")
 
 
-
-
 const managerQuestions = [ { 
     type: 'input',
-    message: "What is the team Manager's name?",
+    message: "What is the Manager's name?",
     name: 'name',     
     },
     { 
     type: 'input',
-    message: "What is the team Manager's ID?",
+    message: "What is the  Manager's ID?",
     name: 'id',     
     },
     { 
     type: 'input',
-    message: "What is the team Manager's email address?",
+    message: "What is the Manager's email address?",
     name: 'email',     
     },
     {
     type: 'input',
-    message: "What is the team Manager's office number?",
+    message: "What is the Manager's office number?",
     name: 'officenum', 
     } 
 ]
@@ -86,13 +84,11 @@ const moreMembers = [
 function initialQuestion(){
     teamArr = []
     
-    
     inquirer.prompt(managerQuestions)
         .then((answers)=> {
         let {name, id, email, officenum} = answers
-        let manager = new Manager(name, id, email, officenum)
+        let manager  = new Manager(name, id, email, officenum)
         teamArr.push(manager)
-        console.log(teamArr)
         
         let addMoreMembers = () => {
             inquirer.prompt(moreMembers)
@@ -100,22 +96,46 @@ function initialQuestion(){
                 console.log(answers.nextrole)
                 if (answers.nextrole === "Engineer"){
                     inquirer.prompt(engineerQuestions)
-                }
+                    .then((answers)=>{
+                        let {name, id, email, github} = answers
+                        let engineer = new Engineer(name, id, email, github)
+                        teamArr.push(engineer)
+                        addMoreMembers()
+                    })
+                } else if (answers.nextrole === "Intern"){
+                    inquirer.prompt(internQuestions)
+                    .then((answers)=>{
+                        let {name, id, email, school} = answers
+                        let intern = new Intern(name, id, email, school)
+                        teamArr.push(intern)
+                        addMoreMembers()
+                    })
+                } else if(answers.nextrole === "Manager"){
+                    inquirer.prompt(managerQuestions)
+                    .then((answers)=> {
+                        let {name, id, email, officenum} = answers
+                        manager = new Manager(name, id, email, officenum)
+                        teamArr.push(manager)
+                        addMoreMembers()
+                    }) 
+                } 
+                if(answers.nextrole === "I am finished building my team." && teamArr.length <= 1){
+                    console.log("Sorry, you must include another member.");
+                    addMoreMembers()           
+                } else if (answers.nextrole === "I am finished building my team." && teamArr.length >=2){
+                    console.log(teamArr)
+                    console.log("Generating your team profile...")
+                }    
             })
         }
         addMoreMembers()
-
-        
-    
     })
         
-}     
-
-
+}         
 
 function init() {
     initialQuestion()
 
 }
 
-init()
+init();
