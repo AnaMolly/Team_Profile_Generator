@@ -3,6 +3,7 @@ const fs = require("fs")
 const Manager = require("./lib/Manager")
 const Engineer = require("./lib/Engineer")
 const Intern = require("./lib/Intern")
+const generateHTML = require("./src/generatingHTML")
 
 
 const managerQuestions = [ { 
@@ -89,49 +90,62 @@ function initialQuestion(){
         let {name, id, email, officenum} = answers
         let manager  = new Manager(name, id, email, officenum)
         teamArr.push(manager)
-        
-        let addMoreMembers = () => {
-            inquirer.prompt(moreMembers)
-            .then((answers) => {
-                console.log(answers.nextrole)
-                if (answers.nextrole === "Engineer"){
-                    inquirer.prompt(engineerQuestions)
-                    .then((answers)=>{
-                        let {name, id, email, github} = answers
-                        let engineer = new Engineer(name, id, email, github)
-                        teamArr.push(engineer)
-                        addMoreMembers()
-                    })
-                } else if (answers.nextrole === "Intern"){
-                    inquirer.prompt(internQuestions)
-                    .then((answers)=>{
-                        let {name, id, email, school} = answers
-                        let intern = new Intern(name, id, email, school)
-                        teamArr.push(intern)
-                        addMoreMembers()
-                    })
-                } else if(answers.nextrole === "Manager"){
-                    inquirer.prompt(managerQuestions)
-                    .then((answers)=> {
-                        let {name, id, email, officenum} = answers
-                        manager = new Manager(name, id, email, officenum)
-                        teamArr.push(manager)
-                        addMoreMembers()
-                    }) 
-                } 
-                if(answers.nextrole === "I am finished building my team." && teamArr.length <= 1){
-                    console.log("Sorry, you must include another member.");
-                    addMoreMembers()           
-                } else if (answers.nextrole === "I am finished building my team." && teamArr.length >=2){
-                    console.log(teamArr)
-                    console.log("Generating your team profile...")
-                }    
-            })
-        }
+    
         addMoreMembers()
     })
         
 }         
+
+function addMoreMembers(){
+    inquirer.prompt(moreMembers)
+    .then((answers) => {
+        console.log(answers.nextrole)
+        if (answers.nextrole === "Engineer"){
+            inquirer.prompt(engineerQuestions)
+            .then((answers)=>{
+                addEngineer(answers)
+            })
+        } else if (answers.nextrole === "Intern"){
+            inquirer.prompt(internQuestions)
+            .then((answers)=>{
+                addIntern(answers)
+            })
+        } else if(answers.nextrole === "Manager"){
+            inquirer.prompt(managerQuestions)
+            .then((answers)=> {
+                addManager(answers)  
+            }) 
+        } 
+        if(answers.nextrole === "I am finished building my team." && teamArr.length <= 1){
+            console.log("Sorry, you must include another member.");
+            addMoreMembers()           
+        } else if (answers.nextrole === "I am finished building my team." && teamArr.length >=2){
+            console.log(teamArr)
+            fs.writeFile('index.html',generateHTML(teamArr), (err) => err ? console.error(err) : console.log('Generating your team profile...'))
+        }    
+    })
+}
+
+function addEngineer(answers){
+    let {name, id, email, github} = answers
+    let engineer = new Engineer(name, id, email, github)
+    teamArr.push(engineer)
+    addMoreMembers()
+}
+
+function addIntern(answers){
+    let {name, id, email, school} = answers
+    let intern = new Intern(name, id, email, school)
+    teamArr.push(intern)
+    addMoreMembers()
+}
+
+function addManager(answers){
+    let {name, id, email, officenum} = answers
+    manager = new Manager(name, id, email, officenum)
+    teamArr.push(manager)
+    addMoreMembers()
+}
 
 function init() {
     initialQuestion()
