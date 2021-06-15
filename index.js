@@ -14,12 +14,28 @@ const managerQuestions = [ {
     { 
     type: 'input',
     message: "What is the  Manager's ID?",
-    name: 'id',     
+    name: 'id',   
+    validate: answer => {
+        const id = answer.match(/^[0-9]\d*$/)
+        if(id){
+            return true
+            } else {
+               return "Please enter numbers only."
+            }
+        }    
     },
     { 
     type: 'input',
     message: "What is the Manager's email address?",
     name: 'email',     
+    validate: answer => {
+        const email = answer.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        if(email){
+            return true
+            } else {
+               return "Please enter a valid email format."
+            }
+        }
     },
     {
     type: 'input',
@@ -36,12 +52,28 @@ const engineerQuestions = [ {
     { 
     type: 'input',
     message: "What is the Engineer's ID?",
-    name: 'id',     
+    name: 'id',
+    validate: answer => {
+        const id = answer.match(/^[0-9]\d*$/)
+        if(id){
+            return true
+            } else {
+               return "Please enter numbers only."
+            }
+        }         
     },
     { 
     type: 'input',
     message: "What is the Engineer's email address?",
-    name: 'email',     
+    name: 'email',
+    validate: answer => {
+        const email = answer.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        if(email){
+            return true
+            } else {
+               return "Please enter a valid email format."
+            }
+        }    
     },
     {
     type: 'input',
@@ -59,12 +91,28 @@ const internQuestions = [
     { 
     type: 'input',
     message: "What is the Intern's ID?",
-    name: 'id',     
+    name: 'id', 
+    validate: answer => {
+        const id = answer.match(/^[0-9]\d*$/)
+        if(id){
+            return true
+            } else {
+               return "Please enter numbers only."
+            }
+        }       
     },
     { 
     type: 'input',
     message: "What is the Intern's email address?",
-    name: 'email',     
+    name: 'email',  
+    validate: answer => {
+        const email = answer.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        if(email){
+            return true
+            } else {
+               return "Please enter a valid email format."
+            }
+        }     
     },
     {
     type: 'input',
@@ -99,7 +147,7 @@ function initialQuestion(){
 function addMoreMembers(){
     inquirer.prompt(moreMembers)
     .then((answers) => {
-        console.log(answers.nextrole)
+
         if (answers.nextrole === "Engineer"){
             inquirer.prompt(engineerQuestions)
             .then((answers)=>{
