@@ -49,7 +49,7 @@ function generateHTML(teamArr){
         <div class="container" style="text-align: center;">
         <h1 class="display-4" style="font-size:100px; color: lightyellow; font-weight: 200; letter-spacing: 2px">Team Profile</h1>
         <p class="lead" style="font-style: italic; color: lightyellow; font-weight: 100; font-size: 28px; margin:0px; padding-top:10px; letter-spacing: 1.5px;">Find your colleagues here.</p>
-            <img src="./team.png" alt="team" style="max-height: 120px; padding:20px 0px 30px 0px">
+            <img src="./assets/team.png" alt="team" style="max-height: 120px; padding:20px 0px 30px 0px">
         </div>
     </div>
     <body style="background-color: rgb(247, 247, 225);">
