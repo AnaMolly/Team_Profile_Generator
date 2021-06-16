@@ -1,19 +1,19 @@
 const Employee = require("../lib/Employee")
 
 describe("Employee", () =>{
-    it("Should set a name with the constructor function", () => {
+    it("Should set a name", () => {
         let name = "Ana"
         let employee = new Employee(name,33,"ana@gmail.com")
         expect(employee.name).toEqual(name)
     });
 
-    it("Should set an id with the constructor function",()=>{
-        let id = 56
+    it("Should set an id",()=>{
+        let id = 33
         let employee = new Employee("Ana",id,"ana@gmail.com")
         expect(employee.id).toEqual(id)
     });
 
-    it("Should set an email with the constructor function",()=>{
+    it("Should set an email",()=>{
         let email = "ana@gmail.com"
         let employee = new Employee("Ana",33, email)
         expect(employee.email).toEqual(email)
@@ -28,7 +28,7 @@ describe("Employee", () =>{
     })
     describe("getID", () => {
         it("Should return id", () => {
-            let id = 56
+            let id = 33
             let employee = new Employee("Ana",id,"ana@gmail.com")
             expect(employee.getID()).toEqual(id)
         })
