@@ -1,22 +1,33 @@
 function generateHTML(teamArr){
     let length = teamArr.length
 
-
+    let uniqueData = (teamArr) => {
+            if(teamArr.getRole()==="Manager"){
+             return `<li class="list-group-item" style="background-color: rgb(255, 240, 211);  margin:8px; font-size: 17px; color: rgb(100, 99, 97)">Office Number: <span>${teamArr.officenum}</span></li>`
+            } 
+            if(teamArr.getRole()==="Engineer"){
+                return `<li class="list-group-item" style="background-color: rgb(255, 240, 211); margin:8px; font-size: 17px; color: rgb(100, 99, 97)">Github: <a href="${teamArr.github}" target="_blank"> ${teamArr.github}</a></li>`
+            } 
+            if(teamArr.getRole()==="Intern"){
+                return `<li class="list-group-item" style="background-color: rgb(255, 240, 211);  margin:8px; font-size: 17px; color: rgb(100, 99, 97)">School: <span>${teamArr.school}</span></li>`
+            }
+    }  
+    
     
     let addMembers = (teamArr) => {
         let cards=""
-        console.log(teamArr)
         for (i=0;i<length;i++){
             cards += `
            
-                <div class="card" style="width: 18rem; box-shadow: 5px 8px 8px #a7a7a7; border:none">
+                <div class="card" style="width: 22rem; box-shadow: 5px 8px 8px #a7a7a7; border:none; margin:15px">
                     <div class="card-header" id="" style="color:white; font-weight:300; font-size: 35px; color:white; background-color: rgb(114, 114, 13)"> <span>${teamArr[i].name}</span>
                         <p style="color:white; font-weight:100; font-size: 25px; color:white; margin:0px">${teamArr[i].getRole()} </p>
                         </div>
                         <ul class="list-group list-group-flush" style="padding:10px; background-color:rgb(187, 187, 34)">
-                            <li class="list-group-item" style="background-color: rgb(255, 240, 211); margin:8px; font-size: 17px; color: rgb(100, 99, 97)">Email: <span>${teamArr[i].email}</span></li>
+                            <li class="list-group-item" style="background-color: rgb(255, 240, 211); margin:8px; font-size: 17px; color: rgb(100, 99, 97)">Email: <a href="mailto:${teamArr[i].email}"> ${teamArr[i].email}</a></li>
                             <li class="list-group-item" style="background-color: rgb(255, 240, 211);  margin:8px; font-size: 17px; color: rgb(100, 99, 97)">ID: <span>${teamArr[i].id}</span></li>
-                        </ul>
+                            ${uniqueData(teamArr[i])}   
+                            
                 </div>
             `
         }
@@ -49,6 +60,7 @@ function generateHTML(teamArr){
     </html>
 `
 }
+
 
 
 module.exports =  generateHTML
