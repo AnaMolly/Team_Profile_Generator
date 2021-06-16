@@ -20,7 +20,7 @@
   # Usage
   To use the application, run 'node index.js' in the terminal. 
  
-  A walk-through video on how to use the application: https://youtu.be/0hVC-QHTiYI
+  A walk-through video showing how to use the application: https://youtu.be/0hVC-QHTiYI
 
  ![](./assets/Team_Profile_Generator.gif)
  
